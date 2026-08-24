@@ -20,6 +20,7 @@ ARTIFACTS = {
 CONFIG = {
     "launch_at": "2026-09-01T00:00:00+00:00",
     "cutoff_at": "2026-09-15T00:00:00+00:00",
+    "response_timezone": "+00:00",
     "artifacts": ARTIFACTS,
 }
 
@@ -81,6 +82,28 @@ class GateEvaluatorTest(unittest.TestCase):
         serialized = json.dumps(result["ledger"])
         self.assertNotIn("@", serialized)
         self.assertTrue(all(len(item["email_sha256"]) == 64 for item in result["ledger"]))
+
+    def test_naive_tally_timestamp_uses_frozen_response_timezone(self):
+        plus_eight = json.loads(json.dumps(CONFIG))
+        plus_eight["response_timezone"] = "+08:00"
+        rows = [
+            row("before@example.com", "2026-09-01 07:59:59"),
+            row("inside@example.com", "2026-09-01 08:00:00"),
+            row("last@example.com", "2026-09-15 07:59:59"),
+            row("after@example.com", "2026-09-15 08:00:00"),
+        ]
+        result = evaluate_gate(rows, plus_eight, set())
+        self.assertEqual(result["included_unique_people"], 2)
+        reasons = [entry["reason"] for entry in result["ledger"]]
+        self.assertEqual(reasons, ["prelaunch_test", "", "", "post_cutoff"])
+
+    def test_verified_tally_csv_utc_format_is_explicit(self):
+        result = evaluate_gate(
+            [row("person@example.com", "2026-09-05 00:00:00")],
+            CONFIG,
+            set(),
+        )
+        self.assertEqual(result["included_unique_people"], 1)
 
     def test_missing_or_late_publication_forces_fail(self):
         eight = [row(f"person{i}@example.com") for i in range(8)]

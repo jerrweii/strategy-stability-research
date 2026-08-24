@@ -4,7 +4,7 @@ import json
 import re
 import sys
 import unicodedata
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 EXPECTED_ARTIFACTS = {
@@ -24,8 +24,24 @@ REQUIRED_FIELDS = (
 EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 
-def parse_time(value: str) -> datetime:
-    return datetime.fromisoformat(value.replace("Z", "+00:00"))
+def parse_offset(value: str) -> timezone:
+    match = re.fullmatch(r"([+-])(\d{2}):(\d{2})", value)
+    if not match:
+        raise ValueError("response_timezone must use ±HH:MM")
+    sign = 1 if match.group(1) == "+" else -1
+    hours, minutes = int(match.group(2)), int(match.group(3))
+    if hours > 23 or minutes > 59:
+        raise ValueError("response_timezone is out of range")
+    return timezone(sign * timedelta(hours=hours, minutes=minutes))
+
+
+def parse_time(value: str, naive_timezone: timezone | None = None) -> datetime:
+    parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if parsed.tzinfo is None:
+        if naive_timezone is None:
+            raise ValueError("naive timestamp requires response_timezone")
+        parsed = parsed.replace(tzinfo=naive_timezone)
+    return parsed.astimezone(timezone.utc)
 
 
 def normalize_email(value: str) -> str:
@@ -54,13 +70,18 @@ def publications_complete(config: dict) -> bool:
 def evaluate_gate(rows: list[dict], config: dict, spam_emails: set[str]) -> dict:
     launch = parse_time(config["launch_at"])
     cutoff = parse_time(config["cutoff_at"])
+    response_timezone = parse_offset(config["response_timezone"])
     spam = {normalize_email(value) for value in spam_emails}
     included: set[str] = set()
     ledger: list[dict] = []
 
-    for row in sorted(rows, key=lambda item: parse_time(item["Submitted at"])):
+    sorted_rows = sorted(
+        rows,
+        key=lambda item: parse_time(item["Submitted at"], response_timezone),
+    )
+    for row in sorted_rows:
         normalized = normalize_email(row.get("Email", ""))
-        submitted = parse_time(row["Submitted at"])
+        submitted = parse_time(row["Submitted at"], response_timezone)
         reason = ""
         if submitted < launch:
             reason = "prelaunch_test"

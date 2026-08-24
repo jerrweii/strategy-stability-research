@@ -1,5 +1,6 @@
 import argparse
 import json
+import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -24,6 +25,10 @@ def parse_time(value: str) -> datetime:
 def valid_url(value: str) -> bool:
     return value.startswith("https://") and len(value) > len("https://")
 
+def valid_response_timezone(value: str) -> bool:
+    match = re.fullmatch(r"([+-])(\d{2}):(\d{2})", value)
+    return bool(match and int(match.group(2)) <= 23 and int(match.group(3)) <= 59)
+
 
 def write_atomic(path: Path, data: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -32,15 +37,23 @@ def write_atomic(path: Path, data: dict) -> None:
     temporary.replace(path)
 
 
-def freeze(path: Path, artifact_one_url: str, launch_at: datetime) -> dict:
+def freeze(
+    path: Path,
+    artifact_one_url: str,
+    launch_at: datetime,
+    response_timezone: str,
+) -> dict:
     if path.exists():
         raise FileExistsError(f"gate config already exists: {path}")
     if not valid_url(artifact_one_url):
         raise ValueError("Artifact 1 URL must be absolute HTTPS")
+    if not valid_response_timezone(response_timezone):
+        raise ValueError("response_timezone must use a valid ±HH:MM offset")
     launch = launch_at.astimezone(timezone.utc)
     config = {
         "launch_at": iso(launch),
         "cutoff_at": iso(launch + timedelta(days=14)),
+        "response_timezone": response_timezone,
         "artifacts": {
             ARTIFACT_ONE: {"url": artifact_one_url, "published_at": iso(launch)},
             EXPECTED_ARTIFACTS[1]: {"url": None, "published_at": None},
@@ -83,6 +96,7 @@ def main() -> int:
     freeze_parser = commands.add_parser("freeze")
     freeze_parser.add_argument("path", type=Path)
     freeze_parser.add_argument("artifact_one_url")
+    freeze_parser.add_argument("--response-timezone", required=True)
     publish_parser = commands.add_parser("publish")
     publish_parser.add_argument("path", type=Path)
     publish_parser.add_argument("artifact_id")
@@ -90,7 +104,12 @@ def main() -> int:
     args = parser.parse_args()
     now = datetime.now(timezone.utc)
     if args.command == "freeze":
-        result = freeze(args.path, args.artifact_one_url, now)
+        result = freeze(
+            args.path,
+            args.artifact_one_url,
+            now,
+            args.response_timezone,
+        )
     else:
         result = record_publication(args.path, args.artifact_id, args.url, now)
     print(json.dumps(result, indent=2))

@@ -13,10 +13,10 @@ The campaign requires three published value-first artifacts and eight unique qua
 Immediately before sharing Artifact 1:
 
 ```bash
-python scripts/gate_config.py freeze private/gate-config.json "https://confirmed-artifact-one-url"
+python scripts/gate_config.py freeze private/gate-config.json "https://confirmed-artifact-one-url" --response-timezone "+00:00"
 ```
 
-This records `launch_at`, computes `cutoff_at = launch_at + 14 days`, and records Artifact 1. There is no reset or extension command.
+This records `launch_at`, computes `cutoff_at = launch_at + 14 days`, records Artifact 1, and freezes how naive Tally CSV timestamps are interpreted. The verified prelaunch export used UTC (`+00:00`) while the UI displayed local `+08:00`; re-verify the CSV behavior before launch and pass the observed offset explicitly. There is no reset or extension command.
 
 ## Record follow-up artifacts
 
