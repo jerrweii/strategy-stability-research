@@ -2,6 +2,8 @@ import json
 import unittest
 from pathlib import Path
 
+
+from scripts.validate_report_data import validate
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -46,6 +48,20 @@ class ReportDataTest(unittest.TestCase):
         limitations = " ".join(self.data["limitations"]).lower()
         for term in ("profitability", "robustness", "demand", "nfi"):
             self.assertIn(term, limitations)
+
+
+class ValidatorTest(unittest.TestCase):
+    def test_valid_contract_has_no_errors(self):
+        data = json.loads((ROOT / "raw/report-data.json").read_text(encoding="utf-8"))
+        self.assertEqual(validate(data), [])
+
+    def test_rejects_incorrect_headline_and_monthly_math(self):
+        data = json.loads((ROOT / "raw/report-data.json").read_text(encoding="utf-8"))
+        data["headline"] = "Nightly Hyperopt does not pass."
+        data["monthly_scenarios"][1]["jobs_per_month"] = 6
+        errors = validate(data)
+        self.assertIn("incorrect measured headline", errors)
+        self.assertIn("monthly scenario 1 omits scheduled runs", errors)
 
 
 if __name__ == "__main__":
