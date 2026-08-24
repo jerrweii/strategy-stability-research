@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A pinned Freqtrade experiment separating scheduled backtests from Hyperopt.">
+  <title>Field Note 01 · $PUBLISHER</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script async src="https://tally.so/widgets/embed.js"></script>
+  <script defer src="assets/tally.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="identity" href="#top">$PUBLISHER / Field Note 01</a>
+    <nav aria-label="Report">
+      <a href="#method">Method</a>
+      <a href="raw/report-data.json">Raw artifacts</a>
+      <a href="#request">Request report</a>
+    </nav>
+  </header>
+
+  <main id="top" class="shell">
+    <section class="hero" aria-labelledby="report-title">
+      <div>
+        <p class="eyebrow">Measured · pinned · reproducible</p>
+        <h1 id="report-title">$HEADLINE</h1>
+        <p class="lede">A public Freqtrade experiment separates the cheap monitoring loop from the heavy optimization job—and prices both across a full month of scheduled runs.</p>
+      </div>
+      <aside class="verdict" aria-label="Bounded verdict">
+        <span>Verdict</span>
+        <strong>Technical gate passed</strong>
+        <p>$VERDICT</p>
+      </aside>
+    </section>
+
+    <section class="metric-grid" aria-label="Measured workload summary">
+      <article><strong>$FIXED_SECONDS</strong><span>Fixed backtest</span></article>
+      <article><strong>$FIXED_MEMORY_MB</strong><span>Fixed peak memory</span></article>
+      <article><strong>$HYPEROPT_TIME</strong><span>500-epoch Hyperopt</span></article>
+      <article><strong>$HYPEROPT_MEMORY_GIB</strong><span>Hyperopt peak memory</span></article>
+    </section>
+
+    <div class="evidence-grid" id="method">
+      <section class="panel">
+        <p class="section-number">01 / What we ran</p>
+        <h2>Pinned benchmark</h2>
+        <ul>
+          <li>Freqtrade 2026.7 at a pinned image digest</li>
+          <li>Bandtastic at commit <code>$STRATEGY_COMMIT</code></li>
+          <li>Ten Binance spot pairs on 15-minute data</li>
+          <li>Two uncached fixed runs and an untouched OOS replay</li>
+        </ul>
+        <details><summary>Full image digest</summary><code>$IMAGE_DIGEST</code></details>
+      </section>
+      <section class="panel">
+        <p class="section-number">02 / What changed</p>
+        <h2>Two workloads, two cadences</h2>
+        <p>Fixed-parameter checks are cheap enough to schedule nightly in this small benchmark. Optimization is materially slower and heavier, so it moves to weekly, monthly, on-demand, or bring-your-own compute.</p>
+        <p>The untouched OOS replay contained only <strong>$OOS_TRADES trades</strong>. It proves the export/replay path, not robustness.</p>
+      </section>
+    </div>
+
+    <section class="panel economics" aria-labelledby="economics-title">
+      <p class="section-number">03 / Full-month economics</p>
+      <h2 id="economics-title">Every scheduled night included</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Strategies</th><th scope="col">Windows/night</th><th scope="col">Jobs/month</th><th scope="col">Projected total</th></tr></thead>
+          <tbody>$SCENARIO_ROWS</tbody>
+        </table>
+      </div>
+      <p class="fine-print">Illustrative rates; excludes orchestration, database, observability, support, paid data, retries, taxes, and idle capacity.</p>
+    </section>
+
+    <section class="limitations" aria-labelledby="limits-title">
+      <p class="section-number">04 / What this does not prove</p>
+      <h2 id="limits-title">Boundaries before conclusions</h2>
+      <ul>$LIMITATIONS</ul>
+    </section>
+
+    <section id="request" class="request" aria-labelledby="request-title">
+      <div>
+        <p class="section-number">Validation cohort</p>
+        <h2 id="request-title">Request a scheduled stability report</h2>
+        <p>We are testing whether self-hosting algo traders will schedule recurring checks—not selling strategies or changing parameters automatically.</p>
+        <p class="fine-print">Private responses in Tally. No broker keys. No write access. No performance promise. Cohort review does not guarantee a report.</p>
+      </div>
+      <div>
+        <p class="field-label">Four required fields</p>
+        <ul class="field-list"><li>Email</li><li>Framework</li><li>Number of live strategies</li><li>Current monitoring method</li></ul>
+        <a id="report-request" class="cta-button"
+           href="https://tally.so/r/$TALLY_FORM_ID?artifact_id=$ARTIFACT_ID&amp;page_version=$PAGE_VERSION&amp;source=direct"
+           data-form-id="$TALLY_FORM_ID"
+           data-artifact-id="$ARTIFACT_ID"
+           data-page-version="$PAGE_VERSION">Request a scheduled stability report</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div><a href="raw/report-data.json">Report data</a> · <a href="raw/verification.json">Verification</a> · <a href="raw/economics.json">Economics</a></div>
+    <div>Independent research. Not investment advice.</div>
+  </footer>
+</body>
+</html>
