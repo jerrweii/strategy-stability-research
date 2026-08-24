@@ -13,6 +13,9 @@ class BuildTest(unittest.TestCase):
         self.data = json.loads(
             (ROOT / "raw/report-data.json").read_text(encoding="utf-8")
         )
+        self.timeline_data = json.loads(
+            (ROOT / "raw/orb-decay-timeline.json").read_text(encoding="utf-8")
+        )
 
     def test_rendered_claims_and_order_are_exact(self):
         html = render(self.data, "testForm123", ROOT / "src")
@@ -48,6 +51,31 @@ class BuildTest(unittest.TestCase):
         self.assertNotIn("Enter broker key", html)
         self.assertNotIn("repository upload", html.lower())
 
+    def test_tutorial_timeline_is_measured_and_bounded(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            build(
+                ROOT / "raw/report-data.json",
+                ROOT / "src",
+                output,
+                "testForm123",
+            )
+            html = (output / "tutorial-decay-audit/index.html").read_text(
+                encoding="utf-8"
+            )
+        self.assertIn(
+            "This ORB reconstruction never earned positive OOS expectancy",
+            html,
+        )
+        self.assertIn("2017", html)
+        self.assertIn("-0.319R", html)
+        self.assertIn("This timeline describes that cited reconstruction only", html)
+        self.assertNotIn("Larry's strategy decayed", html)
+        self.assertIn(
+            "artifact_id=part-time-larry-decay-timeline-01",
+            html,
+        )
+
     def test_empty_form_id_fails_closed(self):
         with self.assertRaisesRegex(ValueError, "Tally form ID is required"):
             render(self.data, "", ROOT / "src")
@@ -65,9 +93,13 @@ class BuildTest(unittest.TestCase):
                 "index.html",
                 "assets/styles.css",
                 "assets/tally.js",
+                "tutorial-decay-audit/index.html",
                 "raw/report-data.json",
                 "raw/verification.json",
                 "raw/economics.json",
+                "raw/tutorial-decay-audit.json",
+                "raw/decay-run-manifest.schema.json",
+                "raw/orb-decay-timeline.json",
             }
             actual = {
                 str(path.relative_to(output)).replace("\\", "/")

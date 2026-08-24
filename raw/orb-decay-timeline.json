@@ -1,0 +1,463 @@
+{
+  "schema_version": 1,
+  "artifact_id": "part-time-larry-decay-timeline-01",
+  "page_version": "1.0.0",
+  "status": "reconstructed_from_cited_rules",
+  "tutorial_url": "https://www.youtube.com/watch?v=ouveMWaInn8",
+  "prior_tutorial_url": "https://www.youtube.com/watch?v=RZ_4OI_K6Aw",
+  "data_source_url": "https://raw.githubusercontent.com/BrianWeiss1/StockList/main/5min_data_SPY_2015_to_2024.csv",
+  "data_license": "not specified by source repository; raw data is not redistributed",
+  "data": {
+    "raw_rows": 447541,
+    "duplicate_rows_removed": 11289,
+    "rth_rows": 183776,
+    "start": "2015-01-05T09:30:00",
+    "end": "2024-04-30T16:00:00",
+    "sha256": "f4e3812aef3f868fe7473348fbdac6dddc39a8a6e43b620da4366c9db22e14f5"
+  },
+  "reconstruction": {
+    "bar_minutes": 5,
+    "session": "09:30-16:00 America/New_York naive local timestamps",
+    "opening_ranges_minutes": [
+      15,
+      30,
+      60
+    ],
+    "direction": "long only",
+    "entry": "first post-range 5-minute close above opening-range high, no entries after 15:45",
+    "stop": "entry minus opening-range size",
+    "target": "entry plus opening-range size (1R)",
+    "ambiguous_same_bar": "if stop and target hit in one bar, stop is applied first",
+    "session_exit": "last bar at or before 15:55"
+  },
+  "results": {
+    "opening_range_minutes_tested": [
+      15,
+      30,
+      60
+    ],
+    "round_trip_cost_bps": 10,
+    "yearly_by_parameter": [
+      {
+        "year": 2015,
+        "opening_range_minutes": 15,
+        "trades": 171,
+        "gross_expectancy_r": -0.114,
+        "net_expectancy_r": -0.474409,
+        "net_total_r": -81.123954,
+        "win_rate": 0.397661,
+        "max_drawdown_r": 81.007976
+      },
+      {
+        "year": 2015,
+        "opening_range_minutes": 30,
+        "trades": 153,
+        "gross_expectancy_r": -0.061057,
+        "net_expectancy_r": -0.351083,
+        "net_total_r": -53.715747,
+        "win_rate": 0.405229,
+        "max_drawdown_r": 53.715257
+      },
+      {
+        "year": 2015,
+        "opening_range_minutes": 60,
+        "trades": 132,
+        "gross_expectancy_r": 0.017212,
+        "net_expectancy_r": -0.217689,
+        "net_total_r": -28.735012,
+        "win_rate": 0.431818,
+        "max_drawdown_r": 30.340543
+      },
+      {
+        "year": 2016,
+        "opening_range_minutes": 15,
+        "trades": 180,
+        "gross_expectancy_r": 0.027457,
+        "net_expectancy_r": -0.424559,
+        "net_total_r": -76.420538,
+        "win_rate": 0.472222,
+        "max_drawdown_r": 80.094403
+      },
+      {
+        "year": 2016,
+        "opening_range_minutes": 30,
+        "trades": 168,
+        "gross_expectancy_r": 0.059404,
+        "net_expectancy_r": -0.297049,
+        "net_total_r": -49.904238,
+        "win_rate": 0.47619,
+        "max_drawdown_r": 52.865415
+      },
+      {
+        "year": 2016,
+        "opening_range_minutes": 60,
+        "trades": 146,
+        "gross_expectancy_r": 0.088803,
+        "net_expectancy_r": -0.189037,
+        "net_total_r": -27.599398,
+        "win_rate": 0.465753,
+        "max_drawdown_r": 29.240023
+      },
+      {
+        "year": 2017,
+        "opening_range_minutes": 15,
+        "trades": 185,
+        "gross_expectancy_r": 0.089518,
+        "net_expectancy_r": -0.61529,
+        "net_total_r": -113.828574,
+        "win_rate": 0.405405,
+        "max_drawdown_r": 112.381939
+      },
+      {
+        "year": 2017,
+        "opening_range_minutes": 30,
+        "trades": 173,
+        "gross_expectancy_r": 0.070457,
+        "net_expectancy_r": -0.499567,
+        "net_total_r": -86.425029,
+        "win_rate": 0.387283,
+        "max_drawdown_r": 85.665126
+      },
+      {
+        "year": 2017,
+        "opening_range_minutes": 60,
+        "trades": 151,
+        "gross_expectancy_r": 0.126423,
+        "net_expectancy_r": -0.319071,
+        "net_total_r": -48.179666,
+        "win_rate": 0.377483,
+        "max_drawdown_r": 48.967415
+      },
+      {
+        "year": 2018,
+        "opening_range_minutes": 15,
+        "trades": 193,
+        "gross_expectancy_r": 0.006836,
+        "net_expectancy_r": -0.439378,
+        "net_total_r": -84.799865,
+        "win_rate": 0.471503,
+        "max_drawdown_r": 88.509496
+      },
+      {
+        "year": 2018,
+        "opening_range_minutes": 30,
+        "trades": 181,
+        "gross_expectancy_r": 0.000406,
+        "net_expectancy_r": -0.350032,
+        "net_total_r": -63.355865,
+        "win_rate": 0.436464,
+        "max_drawdown_r": 67.126235
+      },
+      {
+        "year": 2018,
+        "opening_range_minutes": 60,
+        "trades": 160,
+        "gross_expectancy_r": 0.019931,
+        "net_expectancy_r": -0.250419,
+        "net_total_r": -40.066973,
+        "win_rate": 0.45625,
+        "max_drawdown_r": 44.182473
+      },
+      {
+        "year": 2019,
+        "opening_range_minutes": 15,
+        "trades": 190,
+        "gross_expectancy_r": 0.048657,
+        "net_expectancy_r": -0.426588,
+        "net_total_r": -81.05164,
+        "win_rate": 0.494737,
+        "max_drawdown_r": 84.033183
+      },
+      {
+        "year": 2019,
+        "opening_range_minutes": 30,
+        "trades": 178,
+        "gross_expectancy_r": 0.024606,
+        "net_expectancy_r": -0.337265,
+        "net_total_r": -60.033106,
+        "win_rate": 0.449438,
+        "max_drawdown_r": 62.824241
+      },
+      {
+        "year": 2019,
+        "opening_range_minutes": 60,
+        "trades": 156,
+        "gross_expectancy_r": -0.003489,
+        "net_expectancy_r": -0.294772,
+        "net_total_r": -45.984476,
+        "win_rate": 0.410256,
+        "max_drawdown_r": 49.016132
+      },
+      {
+        "year": 2020,
+        "opening_range_minutes": 15,
+        "trades": 202,
+        "gross_expectancy_r": 0.053528,
+        "net_expectancy_r": -0.259318,
+        "net_total_r": -52.382169,
+        "win_rate": 0.50495,
+        "max_drawdown_r": 53.044147
+      },
+      {
+        "year": 2020,
+        "opening_range_minutes": 30,
+        "trades": 193,
+        "gross_expectancy_r": -0.050572,
+        "net_expectancy_r": -0.298261,
+        "net_total_r": -57.564359,
+        "win_rate": 0.440415,
+        "max_drawdown_r": 58.324568
+      },
+      {
+        "year": 2020,
+        "opening_range_minutes": 60,
+        "trades": 172,
+        "gross_expectancy_r": -0.004587,
+        "net_expectancy_r": -0.198975,
+        "net_total_r": -34.223657,
+        "win_rate": 0.453488,
+        "max_drawdown_r": 35.249216
+      },
+      {
+        "year": 2021,
+        "opening_range_minutes": 15,
+        "trades": 185,
+        "gross_expectancy_r": 0.0539,
+        "net_expectancy_r": -0.391494,
+        "net_total_r": -72.426425,
+        "win_rate": 0.486486,
+        "max_drawdown_r": 75.916399
+      },
+      {
+        "year": 2021,
+        "opening_range_minutes": 30,
+        "trades": 175,
+        "gross_expectancy_r": -0.007448,
+        "net_expectancy_r": -0.341603,
+        "net_total_r": -59.780473,
+        "win_rate": 0.457143,
+        "max_drawdown_r": 62.21776
+      },
+      {
+        "year": 2021,
+        "opening_range_minutes": 60,
+        "trades": 149,
+        "gross_expectancy_r": 0.068974,
+        "net_expectancy_r": -0.189287,
+        "net_total_r": -28.203753,
+        "win_rate": 0.436242,
+        "max_drawdown_r": 29.453175
+      },
+      {
+        "year": 2022,
+        "opening_range_minutes": 15,
+        "trades": 183,
+        "gross_expectancy_r": -0.058201,
+        "net_expectancy_r": -0.281404,
+        "net_total_r": -51.497007,
+        "win_rate": 0.459016,
+        "max_drawdown_r": 51.494621
+      },
+      {
+        "year": 2022,
+        "opening_range_minutes": 30,
+        "trades": 167,
+        "gross_expectancy_r": 0.032528,
+        "net_expectancy_r": -0.137709,
+        "net_total_r": -22.997355,
+        "win_rate": 0.491018,
+        "max_drawdown_r": 23.612615
+      },
+      {
+        "year": 2022,
+        "opening_range_minutes": 60,
+        "trades": 143,
+        "gross_expectancy_r": 0.045194,
+        "net_expectancy_r": -0.08465,
+        "net_total_r": -12.105001,
+        "win_rate": 0.524476,
+        "max_drawdown_r": 12.84675
+      },
+      {
+        "year": 2023,
+        "opening_range_minutes": 15,
+        "trades": 186,
+        "gross_expectancy_r": 0.023014,
+        "net_expectancy_r": -0.398598,
+        "net_total_r": -74.139249,
+        "win_rate": 0.494624,
+        "max_drawdown_r": 74.619926
+      },
+      {
+        "year": 2023,
+        "opening_range_minutes": 30,
+        "trades": 170,
+        "gross_expectancy_r": 0.069444,
+        "net_expectancy_r": -0.263086,
+        "net_total_r": -44.724577,
+        "win_rate": 0.494118,
+        "max_drawdown_r": 44.469843
+      },
+      {
+        "year": 2023,
+        "opening_range_minutes": 60,
+        "trades": 149,
+        "gross_expectancy_r": 0.061298,
+        "net_expectancy_r": -0.180646,
+        "net_total_r": -26.916199,
+        "win_rate": 0.47651,
+        "max_drawdown_r": 29.836102
+      },
+      {
+        "year": 2024,
+        "opening_range_minutes": 15,
+        "trades": 64,
+        "gross_expectancy_r": -0.172195,
+        "net_expectancy_r": -0.714757,
+        "net_total_r": -45.744453,
+        "win_rate": 0.359375,
+        "max_drawdown_r": 45.023423
+      },
+      {
+        "year": 2024,
+        "opening_range_minutes": 30,
+        "trades": 62,
+        "gross_expectancy_r": -0.251016,
+        "net_expectancy_r": -0.693294,
+        "net_total_r": -42.984222,
+        "win_rate": 0.306452,
+        "max_drawdown_r": 41.984336
+      },
+      {
+        "year": 2024,
+        "opening_range_minutes": 60,
+        "trades": 56,
+        "gross_expectancy_r": -0.115279,
+        "net_expectancy_r": -0.447008,
+        "net_total_r": -25.032435,
+        "win_rate": 0.357143,
+        "max_drawdown_r": 24.069884
+      }
+    ],
+    "walk_forward": [
+      {
+        "oos_year": 2017,
+        "train_years": [
+          2015,
+          2016
+        ],
+        "selected_opening_range_minutes": 60,
+        "train_expectancy_r": -0.202642,
+        "oos_trades": 151,
+        "oos_expectancy_r": -0.319071,
+        "oos_total_r": -48.179666,
+        "oos_win_rate": 0.377483,
+        "oos_max_drawdown_r": 48.967415
+      },
+      {
+        "oos_year": 2018,
+        "train_years": [
+          2016,
+          2017
+        ],
+        "selected_opening_range_minutes": 60,
+        "train_expectancy_r": -0.255148,
+        "oos_trades": 160,
+        "oos_expectancy_r": -0.250419,
+        "oos_total_r": -40.066973,
+        "oos_win_rate": 0.45625,
+        "oos_max_drawdown_r": 44.182473
+      },
+      {
+        "oos_year": 2019,
+        "train_years": [
+          2017,
+          2018
+        ],
+        "selected_opening_range_minutes": 60,
+        "train_expectancy_r": -0.283751,
+        "oos_trades": 156,
+        "oos_expectancy_r": -0.294772,
+        "oos_total_r": -45.984476,
+        "oos_win_rate": 0.410256,
+        "oos_max_drawdown_r": 49.016132
+      },
+      {
+        "oos_year": 2020,
+        "train_years": [
+          2018,
+          2019
+        ],
+        "selected_opening_range_minutes": 60,
+        "train_expectancy_r": -0.272315,
+        "oos_trades": 172,
+        "oos_expectancy_r": -0.198975,
+        "oos_total_r": -34.223657,
+        "oos_win_rate": 0.453488,
+        "oos_max_drawdown_r": 35.249216
+      },
+      {
+        "oos_year": 2021,
+        "train_years": [
+          2019,
+          2020
+        ],
+        "selected_opening_range_minutes": 60,
+        "train_expectancy_r": -0.244537,
+        "oos_trades": 149,
+        "oos_expectancy_r": -0.189287,
+        "oos_total_r": -28.203753,
+        "oos_win_rate": 0.436242,
+        "oos_max_drawdown_r": 29.453175
+      },
+      {
+        "oos_year": 2022,
+        "train_years": [
+          2020,
+          2021
+        ],
+        "selected_opening_range_minutes": 60,
+        "train_expectancy_r": -0.194478,
+        "oos_trades": 143,
+        "oos_expectancy_r": -0.08465,
+        "oos_total_r": -12.105001,
+        "oos_win_rate": 0.524476,
+        "oos_max_drawdown_r": 12.84675
+      },
+      {
+        "oos_year": 2023,
+        "train_years": [
+          2021,
+          2022
+        ],
+        "selected_opening_range_minutes": 60,
+        "train_expectancy_r": -0.138044,
+        "oos_trades": 149,
+        "oos_expectancy_r": -0.180646,
+        "oos_total_r": -26.916199,
+        "oos_win_rate": 0.47651,
+        "oos_max_drawdown_r": 29.836102
+      },
+      {
+        "oos_year": 2024,
+        "train_years": [
+          2022,
+          2023
+        ],
+        "selected_opening_range_minutes": 60,
+        "train_expectancy_r": -0.133634,
+        "oos_trades": 56,
+        "oos_expectancy_r": -0.447008,
+        "oos_total_r": -25.032435,
+        "oos_win_rate": 0.357143,
+        "oos_max_drawdown_r": 24.069884
+      }
+    ]
+  },
+  "limitations": [
+    "This is a cited reconstruction, not the unavailable original tutorial source.",
+    "The public dataset uses adjusted prices, duplicated rows that were removed, naive timestamps, and no published license.",
+    "Five-minute bars replace the tutorial's minute database; 15/30/60 minute ranges become 3/6/12 bars.",
+    "The timeline is evidence about this reconstruction only and does not imply endorsement by Part Time Larry."
+  ]
+}

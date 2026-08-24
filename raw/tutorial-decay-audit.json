@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "artifact_id": "tutorial-source-audit-supplemental-01",
+  "page_version": "1.0.0",
+  "title": "Source recovery notes for the ORB reconstruction",
+  "tutorial": {
+    "backtest_title": "Opening Range Breakout Backtest with Python and Backtrader",
+    "backtest_url": "https://www.youtube.com/watch?v=ouveMWaInn8",
+    "prior_rules_url": "https://www.youtube.com/watch?v=RZ_4OI_K6Aw",
+    "publisher": "Part Time Larry"
+  },
+  "recovered_rules": [
+    "Prior tutorial: 09:30–09:45 ET opening range.",
+    "Long entry when a one-minute candle closes above the opening-range high.",
+    "Stop at entry minus opening-range size; target at entry plus opening-range size (1R).",
+    "Backtest video: regular-session data filtered to 09:30–16:00, 100000 starting cash, 95% PercentSizer, and opening-range candidates 15/30/60 minutes."
+  ],
+  "source_ambiguities": [
+    "No verified official source repository is linked from the current backtest video page.",
+    "A commenter reports a same-bar comparison issue.",
+    "A commenter reports entries after 15:45 could remain overnight.",
+    "The reconstruction adds a 15:45 entry cutoff, 15:55 close, conservative same-bar bracket ordering, and explicit 10 bps round-trip costs."
+  ],
+  "status": "supplemental_only_not_a_locked_campaign_artifact"
+}

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jerrweii.github.io/strategy-stability-research/raw/decay-run-manifest.schema.json",
+  "title": "Strategy Decay Run Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "strategy",
+    "data",
+    "session",
+    "execution",
+    "parameters",
+    "windows",
+    "environment"
+  ],
+  "properties": {
+    "strategy": {
+      "type": "object",
+      "required": ["source_url", "sha256"],
+      "properties": {
+        "source_url": {"type": "string", "format": "uri"},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "data": {
+      "type": "object",
+      "required": ["identifier", "start", "end", "timezone", "adjustment_policy"],
+      "properties": {
+        "identifier": {"type": "string"},
+        "start": {"type": "string", "format": "date"},
+        "end": {"type": "string", "format": "date"},
+        "timezone": {"type": "string"},
+        "adjustment_policy": {"type": "string"}
+      }
+    },
+    "session": {
+      "type": "object",
+      "required": ["market_open", "market_close", "opening_range_minutes"],
+      "properties": {
+        "market_open": {"type": "string"},
+        "market_close": {"type": "string"},
+        "opening_range_minutes": {"type": "integer", "minimum": 1}
+      }
+    },
+    "execution": {
+      "type": "object",
+      "required": ["entry", "exit", "sizing", "fee_bps", "spread_bps", "slippage_bps"],
+      "properties": {
+        "entry": {"type": "string"},
+        "exit": {"type": "string"},
+        "sizing": {"type": "string"},
+        "fee_bps": {"type": "number", "minimum": 0},
+        "spread_bps": {"type": "number", "minimum": 0},
+        "slippage_bps": {"type": "number", "minimum": 0}
+      }
+    },
+    "parameters": {
+      "type": "object",
+      "required": ["spaces", "random_seed"],
+      "properties": {
+        "spaces": {"type": "object"},
+        "random_seed": {"type": "integer"}
+      }
+    },
+    "windows": {
+      "type": "object",
+      "required": ["train_days", "oos_days", "step_days"],
+      "properties": {
+        "train_days": {"type": "integer", "minimum": 1},
+        "oos_days": {"type": "integer", "minimum": 1},
+        "step_days": {"type": "integer", "minimum": 1}
+      }
+    },
+    "environment": {
+      "type": "object",
+      "required": ["python", "framework", "dependencies"],
+      "properties": {
+        "python": {"type": "string"},
+        "framework": {"type": "string"},
+        "dependencies": {"type": "object", "additionalProperties": {"type": "string"}}
+      }
+    }
+  }
+}

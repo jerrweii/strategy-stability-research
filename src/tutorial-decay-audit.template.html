@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A reconstructed, rolling out-of-sample timeline for a public Backtrader opening-range breakout tutorial.">
+  <title>ORB Decay Timeline · Strategy Stability Research</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script async src="https://tally.so/widgets/embed.js"></script>
+  <script defer src="../assets/tally.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="identity" href="../">Strategy Stability Research / Field Note 02</a>
+    <nav aria-label="Report"><a href="#timeline">Timeline</a><a href="../raw/orb-decay-timeline.json">Raw results</a><a href="#request">Request report</a></nav>
+  </header>
+  <main id="top" class="shell">
+    <section class="hero" aria-labelledby="report-title">
+      <div>
+        <p class="eyebrow">Reconstructed rules · rolling OOS · negative result</p>
+        <h1 id="report-title">This ORB reconstruction never earned positive OOS expectancy</h1>
+        <p class="lede">Eight annual out-of-sample windows selected 15, 30, or 60 opening-range minutes from the prior two years. Every selected OOS year remained negative after 10 bps round-trip costs.</p>
+      </div>
+      <aside class="verdict" aria-label="Bounded verdict"><span>Verdict</span><strong>Weak from the first OOS year</strong><p>This is not a detected decay event: the reconstructed edge was already negative in 2017 and remained negative through the partial 2024 sample.</p></aside>
+    </section>
+
+    <section class="metric-grid" aria-label="Timeline summary">
+      <article><strong>$OOS_YEARS</strong><span>annual OOS windows</span></article>
+      <article><strong>$TOTAL_OOS_TRADES</strong><span>selected OOS trades</span></article>
+      <article><strong>$SELECTED_RANGE</strong><span>range selected each year</span></article>
+      <article><strong>$EXPECTANCY_RANGE</strong><span>net OOS expectancy range</span></article>
+    </section>
+
+    <div class="evidence-grid">
+      <section class="panel">
+        <p class="section-number">01 / Recovered tutorial rules</p>
+        <h2>What was reconstructed</h2>
+        <ul><li>09:30–09:45 ET opening range in the prior tutorial</li><li>Long entry on a close above opening-range high</li><li>Stop and target one opening-range size from entry (1R)</li><li>Backtest candidates: 15, 30, and 60 minutes</li></ul>
+        <p><a href="https://www.youtube.com/watch?v=ouveMWaInn8">Backtest video</a> · <a href="https://www.youtube.com/watch?v=RZ_4OI_K6Aw">prior rules video</a></p>
+      </section>
+      <section class="panel">
+        <p class="section-number">02 / Explicit reconstruction choices</p>
+        <h2>Where the public source was incomplete</h2>
+        <p>No verified official repository is linked from the current video page. The replay uses five-minute SPY data, blocks entries after 15:45, closes by 15:55, applies the stop first when both bracket levels occur in one bar, and subtracts 10 bps round trip.</p>
+        <p>This timeline describes that cited reconstruction only—not Part Time Larry’s unavailable original source.</p>
+      </section>
+    </div>
+
+    <section id="timeline" class="panel economics" aria-labelledby="timeline-title">
+      <p class="section-number">03 / Two-year train, next-year test</p>
+      <h2 id="timeline-title">Rolling out-of-sample timeline</h2>
+      <div class="table-wrap"><table><thead><tr><th>OOS year</th><th>Selected range</th><th>Trades</th><th>Expectancy</th><th>Total R</th><th>Max DD</th></tr></thead><tbody>$TIMELINE_ROWS</tbody></table></div>
+      <p class="fine-print">2024 is partial through April 30. Selection maximizes prior-two-year net expectancy across 15/30/60-minute ranges.</p>
+    </section>
+
+    <section class="limitations" aria-labelledby="limits-title">
+      <p class="section-number">04 / Data and inference limits</p>
+      <h2 id="limits-title">A reconstruction is not the original</h2>
+      <ul><li>Public SPY data spans $DATA_START through $DATA_END; $DUPLICATES duplicate rows were removed.</li><li>The source repository publishes no license, so raw data is not redistributed.</li><li>Adjusted prices, naive timestamps, and five-minute bars replace the tutorial’s private minute database.</li><li>The result does not imply endorsement by Part Time Larry and is not a profitability claim.</li></ul>
+      <p><a href="../raw/tutorial-decay-audit.json">Source recovery notes</a> · <a href="../raw/decay-run-manifest.schema.json">Decay-run manifest schema</a> · <a href="../raw/orb-decay-timeline.json">Raw timeline JSON</a></p>
+    </section>
+
+    <section id="request" class="request" aria-labelledby="request-title">
+      <div><p class="section-number">Validation cohort</p><h2 id="request-title">Request a scheduled stability report</h2><p>Have a strategy repository and data contract that can support an honest rolling check? Join the validation cohort.</p><p class="fine-print">Private responses in Tally. No broker keys. No write access. No performance promise.</p></div>
+      <div><p class="field-label">Four required fields</p><ul class="field-list"><li>Email</li><li>Framework</li><li>Number of live strategies</li><li>Current monitoring method</li></ul><a id="report-request" class="cta-button" href="https://tally.so/r/$TALLY_FORM_ID?artifact_id=$ARTIFACT_ID&amp;page_version=$PAGE_VERSION&amp;source=direct" data-form-id="$TALLY_FORM_ID" data-artifact-id="$ARTIFACT_ID" data-page-version="$PAGE_VERSION">Request a scheduled stability report</a></div>
+    </section>
+  </main>
+  <footer class="site-footer"><div><a href="../raw/orb-decay-timeline.json">Timeline data</a> · <a href="../raw/tutorial-decay-audit.json">Source audit</a></div><div>Independent reconstruction. Not investment advice.</div></footer>
+</body>
+</html>
