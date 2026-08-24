@@ -1,0 +1,22 @@
+{
+  "strategy_commit": "eff78d3ce3456b52c68a4e9a33cc055a56b801ff",
+  "image_digest": "sha256:da3428fde0f7f9f976eaafba8abc7eba42bf978f23e4808347e15d476ad9a643",
+  "fixed_runs_exit_zero": true,
+  "fixed_resource_samples_nonzero": true,
+  "fixed_reproducible": true,
+  "fixed_wall_seconds": [
+    15.554923300005612,
+    15.674962000004598
+  ],
+  "fixed_peak_memory_bytes": 594018304,
+  "hyperopt_exit_zero": true,
+  "hyperopt_epochs_saved": 500,
+  "hyperopt_peak_memory_bytes": 8927089524,
+  "exported_buy_params": 8,
+  "exported_sell_params": 8,
+  "oos_exit_zero": true,
+  "oos_archive_found": true,
+  "monthly_scenarios_present": true,
+  "locked_activation_gate_present": true,
+  "results_has_no_placeholders": true
+}

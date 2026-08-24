@@ -1,0 +1,105 @@
+{
+  "benchmark_scope": {
+    "strategy": "Bandtastic",
+    "strategy_commit": "eff78d3ce3456b52c68a4e9a33cc055a56b801ff",
+    "freqtrade_image": "freqtradeorg/freqtrade:2026.7",
+    "image_digest": "sha256:da3428fde0f7f9f976eaafba8abc7eba42bf978f23e4808347e15d476ad9a643",
+    "pairs": 10,
+    "timeframe": "15m",
+    "timerange": "20250101-20250701",
+    "fee_ratio_each_side": 0.001,
+    "median_wall_seconds": 15.614942650005105,
+    "peak_memory_bytes": 594018304,
+    "mean_result_archive_bytes": 1241559.0,
+    "shared_market_data_bytes": 5707204
+  },
+  "pricing_assumptions": {
+    "worker_usd_per_hour": 0.1,
+    "minimum_billable_seconds_per_job": 60,
+    "object_storage_usd_per_gb_month": 0.023,
+    "egress_usd_per_gb": 0.09,
+    "result_retention_days": 30,
+    "note": "Illustrative rates, not a provider quote. Excludes orchestration, database, observability, support, paid market data, and idle capacity."
+  },
+  "monthly_formula": "cost_per_window_run * rolling_windows_per_scheduled_run * scheduled_runs_per_month * strategies_per_user + storage + egress",
+  "scenarios": [
+    {
+      "strategies_per_user": 1,
+      "rolling_windows_per_scheduled_run": 1,
+      "scheduled_runs_per_month": 30,
+      "backtest_jobs_per_month": 30,
+      "monthly_compute_usd_actual_seconds_at_0_10_worker_hour": 0.013012452208337588,
+      "monthly_compute_usd_60_second_minimum_at_0_10_worker_hour": 0.05,
+      "monthly_result_storage_gb_30_day_retention": 0.03724677,
+      "monthly_storage_usd_at_0_023_gb_month": 0.00085667571,
+      "monthly_egress_usd_if_each_result_downloaded_once_at_0_09_gb": 0.0033522092999999998,
+      "monthly_total_usd_conservative": 0.05420888501
+    },
+    {
+      "strategies_per_user": 1,
+      "rolling_windows_per_scheduled_run": 6,
+      "scheduled_runs_per_month": 30,
+      "backtest_jobs_per_month": 180,
+      "monthly_compute_usd_actual_seconds_at_0_10_worker_hour": 0.07807471325002552,
+      "monthly_compute_usd_60_second_minimum_at_0_10_worker_hour": 0.3,
+      "monthly_result_storage_gb_30_day_retention": 0.22348062,
+      "monthly_storage_usd_at_0_023_gb_month": 0.00514005426,
+      "monthly_egress_usd_if_each_result_downloaded_once_at_0_09_gb": 0.020113255799999997,
+      "monthly_total_usd_conservative": 0.32525331006
+    },
+    {
+      "strategies_per_user": 5,
+      "rolling_windows_per_scheduled_run": 6,
+      "scheduled_runs_per_month": 30,
+      "backtest_jobs_per_month": 900,
+      "monthly_compute_usd_actual_seconds_at_0_10_worker_hour": 0.39037356625012765,
+      "monthly_compute_usd_60_second_minimum_at_0_10_worker_hour": 1.5,
+      "monthly_result_storage_gb_30_day_retention": 1.1174031,
+      "monthly_storage_usd_at_0_023_gb_month": 0.0257002713,
+      "monthly_egress_usd_if_each_result_downloaded_once_at_0_09_gb": 0.100566279,
+      "monthly_total_usd_conservative": 1.6262665503
+    }
+  ],
+  "hyperopt_benchmark": {
+    "epochs": 500,
+    "workers": 8,
+    "random_state": 42,
+    "loss": "SharpeHyperOptLossDaily",
+    "wall_seconds": 2608.9872604999982,
+    "peak_memory_bytes": 8927089524,
+    "peak_cpu_percent_docker": 1205.31,
+    "result_bytes": 53001014,
+    "ephemeral_cache_bytes": 542235623,
+    "note": "Separate slower-cadence workload; not part of nightly fixed-parameter cost."
+  },
+  "hyperopt_monthly_scenarios": [
+    {
+      "cadence": "monthly",
+      "strategies_per_user": 1,
+      "jobs_per_month": 1,
+      "illustrative_high_memory_worker_usd_per_hour": 0.4,
+      "monthly_compute_usd": 0.2898874733888887
+    },
+    {
+      "cadence": "monthly",
+      "strategies_per_user": 5,
+      "jobs_per_month": 5,
+      "illustrative_high_memory_worker_usd_per_hour": 0.4,
+      "monthly_compute_usd": 1.4494373669444434
+    },
+    {
+      "cadence": "weekly",
+      "strategies_per_user": 1,
+      "jobs_per_month": 4,
+      "illustrative_high_memory_worker_usd_per_hour": 0.4,
+      "monthly_compute_usd": 1.1595498935555548
+    },
+    {
+      "cadence": "weekly",
+      "strategies_per_user": 5,
+      "jobs_per_month": 20,
+      "illustrative_high_memory_worker_usd_per_hour": 0.4,
+      "monthly_compute_usd": 5.7977494677777734
+    }
+  ]
+}

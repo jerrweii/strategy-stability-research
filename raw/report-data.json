@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "artifact_id": "bandtastic-field-note-01",
+  "page_version": "1.0.0",
+  "publisher": "Strategy Stability Research",
+  "headline": "Nightly backtests pass. Hyperopt needs its own cadence.",
+  "verdict": "Technical gate passed for one 7.3 KB public strategy. Demand, provider pricing, and NFI-scale economics remain unproven.",
+  "provenance": {
+    "strategy": "Bandtastic",
+    "strategy_commit": "eff78d3ce3456b52c68a4e9a33cc055a56b801ff",
+    "strategy_url": "https://github.com/freqtrade/freqtrade-strategies/blob/eff78d3ce3456b52c68a4e9a33cc055a56b801ff/user_data/strategies/Bandtastic.py",
+    "freqtrade_image": "freqtradeorg/freqtrade:2026.7",
+    "image_digest": "sha256:da3428fde0f7f9f976eaafba8abc7eba42bf978f23e4808347e15d476ad9a643",
+    "pairs": 10,
+    "timeframe": "15m",
+    "timerange": "20250101-20250701",
+    "fee_each_side": 0.001
+  },
+  "fixed_backtest": {
+    "wall_seconds": [15.554923300005612, 15.674962000004598],
+    "peak_memory_bytes": 594018304,
+    "trades": 1676,
+    "profit_total_pct": -3.53,
+    "profit_factor": 0.7583406681409702,
+    "expectancy": -0.21066702968377082,
+    "max_drawdown_pct": 4.48
+  },
+  "hyperopt": {
+    "epochs": 500,
+    "workers": 8,
+    "wall_seconds": 2608.9872604999982,
+    "peak_memory_bytes": 8927089524,
+    "result_bytes": 53001014,
+    "ephemeral_cache_bytes": 542235623
+  },
+  "oos": {
+    "timerange": "20250701-20250901",
+    "wall_seconds": 8.571204099993338,
+    "peak_memory_bytes": 461792870,
+    "trades": 22,
+    "profit_total_pct": 0.06,
+    "profit_factor": 2.2826535293031127,
+    "expectancy": 0.25446216818181816,
+    "max_drawdown_pct": 0.04
+  },
+  "monthly_scenarios": [
+    {"strategies": 1, "windows_per_run": 1, "scheduled_runs_per_month": 30, "jobs_per_month": 30, "monthly_total_usd": 0.05420888501},
+    {"strategies": 1, "windows_per_run": 6, "scheduled_runs_per_month": 30, "jobs_per_month": 180, "monthly_total_usd": 0.32525331006},
+    {"strategies": 5, "windows_per_run": 6, "scheduled_runs_per_month": 30, "jobs_per_month": 900, "monthly_total_usd": 1.6262665503}
+  ],
+  "limitations": [
+    "No profitability claim: the default fixed-parameter period lost 3.53%.",
+    "No robustness claim: the untouched OOS replay contained only 22 trades.",
+    "No demand validation: signup and activation gates have not run.",
+    "No NFI-scale extrapolation: Bandtastic is 7.3 KB while current NFI strategies are materially larger.",
+    "Illustrative cloud rates exclude orchestration, database, observability, support, paid data, retries, taxes, and idle capacity."
+  ]
+}
