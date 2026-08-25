@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A reproducible live-vs-backtest trade reconciliation notebook with explicit mismatch classes and sample data.">
+  <title>Live Reconciliation Notebook · Strategy Stability Research</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+  <script async src="https://tally.so/widgets/embed.js"></script>
+  <script defer src="../assets/tally.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="identity" href="../">Strategy Stability Research / Field Note 03</a>
+    <nav aria-label="Report"><a href="#ledger">Mismatch ledger</a><a href="../raw/reconciliation-example.json">Raw results</a><a href="#request">Request report</a></nav>
+  </header>
+  <main id="top" class="shell">
+    <section class="hero" aria-labelledby="report-title">
+      <div>
+        <p class="eyebrow">Executable contract · synthetic fixture · fail-closed keys</p>
+        <h1 id="report-title">$MISMATCH_KEYS of $TOTAL_KEYS sample keys need investigation</h1>
+        <p class="lede">The notebook joins expected backtest trades to live executions by a unique <code>trade_id</code>, then separates timing, price, fee, missing, and unexpected-trade failures instead of hiding them inside aggregate P&amp;L.</p>
+      </div>
+      <aside class="verdict" aria-label="Bounded verdict"><span>Verdict</span><strong>Aggregate drift needs a row-level ledger</strong><p>The sample is deliberately synthetic. It demonstrates a reconciliation contract; it does not claim any live strategy performance.</p></aside>
+    </section>
+
+    <section class="metric-grid" aria-label="Reconciliation summary">
+      <article><strong>$TOTAL_KEYS</strong><span>unique trade keys</span></article>
+      <article><strong>$MATCHED_PAIRS</strong><span>expected/live pairs</span></article>
+      <article><strong>$EXACT_PAIRS</strong><span>pairs inside tolerance</span></article>
+      <article><strong>$MISMATCH_KEYS</strong><span>keys needing review</span></article>
+    </section>
+
+    <div class="evidence-grid">
+      <section class="panel">
+        <p class="section-number">01 / Input contract</p>
+        <h2>One stable key, ten explicit fields</h2>
+        <p>Both CSV files require <code>trade_id</code>, strategy, symbol, side, UTC entry and exit timestamps, quantity, entry and exit prices, and fees. Duplicate or empty IDs fail closed.</p>
+        <p><a href="../raw/reconciliation-expected-sample.csv">Expected CSV</a> · <a href="../raw/reconciliation-actual-sample.csv">Actual CSV</a></p>
+      </section>
+      <section class="panel">
+        <p class="section-number">02 / Comparison rules</p>
+        <h2>Small differences remain visible</h2>
+        <ul><li>Identity drift: strategy, symbol, or side disagrees for a shared key</li><li>Timing drift: more than $TIMING_TOLERANCE seconds</li><li>Price drift: more than $PRICE_TOLERANCE bps at entry or exit</li><li>Fee drift: more than $$${FEE_TOLERANCE}</li><li>Quantity must match exactly within floating-point tolerance</li></ul>
+      </section>
+    </div>
+
+    <section id="ledger" class="panel economics" aria-labelledby="ledger-title">
+      <p class="section-number">03 / Row-level result</p>
+      <h2 id="ledger-title">Reconciliation ledger</h2>
+      <div class="table-wrap"><table><thead><tr><th>Trade</th><th>Status</th><th>Flags</th><th>Time Δ</th><th>Price Δ</th><th>Fee Δ</th><th>P&amp;L gap</th></tr></thead><tbody>$RECONCILIATION_ROWS</tbody></table></div>
+      <p class="fine-print">A multi-factor drift row crossed more than one tolerance. Unmatched rows do not fabricate a P&amp;L gap.</p>
+    </section>
+
+    <section class="limitations" aria-labelledby="limits-title">
+      <p class="section-number">04 / Run it on your own exports</p>
+      <h2 id="limits-title">Reproduce before interpreting</h2>
+      <pre><code>python reconcile_live_vs_backtest.py \
+  --expected expected.csv \
+  --actual actual.csv \
+  --output reconciliation.json</code></pre>
+      <ul><li>Matching is exact on <code>trade_id</code>; the notebook refuses duplicate keys instead of guessing.</li><li>The committed sample is synthetic and covers one example of every displayed mismatch class.</li><li>Input SHA-256 digests are recorded in the JSON output.</li><li>Broker-specific partial fills must be consolidated to the declared trade contract before comparison.</li></ul>
+      <p><a href="../raw/reconcile_live_vs_backtest.py">Notebook source</a> · <a href="../raw/reconciliation-example.json">Example JSON</a></p>
+    </section>
+
+    <section id="request" class="request" aria-labelledby="request-title">
+      <div><p class="section-number">Validation cohort</p><h2 id="request-title">Request a scheduled stability report</h2><p>Already reconciling live trades by hand? Join the validation cohort for a scheduled, evidence-linked report.</p><p class="fine-print">Private responses in Tally. No broker keys. No write access. No performance promise.</p></div>
+      <div><p class="field-label">Four required fields</p><ul class="field-list"><li>Email</li><li>Framework</li><li>Number of live strategies</li><li>Current monitoring method</li></ul><a id="report-request" class="cta-button" href="https://tally.so/r/$TALLY_FORM_ID?artifact_id=$ARTIFACT_ID&amp;page_version=$PAGE_VERSION&amp;source=direct" data-form-id="$TALLY_FORM_ID" data-artifact-id="$ARTIFACT_ID" data-page-version="$PAGE_VERSION">Request a scheduled stability report</a></div>
+    </section>
+  </main>
+  <footer class="site-footer"><div><a href="../raw/reconciliation-example.json">Reconciliation data</a> · <a href="../raw/reconcile_live_vs_backtest.py">Source</a></div><div>Synthetic example. Not investment advice.</div></footer>
+</body>
+</html>

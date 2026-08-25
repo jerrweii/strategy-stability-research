@@ -127,14 +127,53 @@ def build(
             "DUPLICATES": f"{tutorial_data['data']['duplicate_rows_removed']:,}",
         },
     )
+    reconciliation_data_path = data_path.parent / "reconciliation-example.json"
+    reconciliation_data = json.loads(
+        reconciliation_data_path.read_text(encoding="utf-8")
+    )
+    summary = reconciliation_data["summary"]
+    tolerances = reconciliation_data["tolerances"]
+    reconciliation_rows = "".join(
+        "<tr>"
+        f"<td>{escape(row['trade_id'])}</td>"
+        f"<td>{escape(row['status'].replace('_', ' ').replace('multi factor', 'multi-factor'))}</td>"
+        f"<td>{escape(', '.join(row['discrepancy_flags']) or 'none')}</td>"
+        f"<td>{row.get('max_timing_delta_seconds', '—')}{'s' if 'max_timing_delta_seconds' in row else ''}</td>"
+        f"<td>{f'{row['max_price_delta_bps']:.1f} bps' if 'max_price_delta_bps' in row else '—'}</td>"
+        f"<td>{f'${row['fee_delta_usd']:.2f}' if 'fee_delta_usd' in row else '—'}</td>"
+        f"<td>{f'${row['pnl_gap_usd']:+.2f}' if row['pnl_gap_usd'] is not None else '—'}</td>"
+        "</tr>"
+        for row in reconciliation_data["rows"]
+    )
+    reconciliation_html = render_campaign_artifact(
+        reconciliation_data,
+        tally_form_id,
+        source_dir,
+        "reconciliation-notebook.template.html",
+        {
+            "TOTAL_KEYS": str(summary["total_keys"]),
+            "MATCHED_PAIRS": str(summary["matched_pairs"]),
+            "EXACT_PAIRS": str(summary["exact_pairs"]),
+            "MISMATCH_KEYS": str(summary["mismatch_keys"]),
+            "TIMING_TOLERANCE": str(tolerances["timing_seconds"]),
+            "PRICE_TOLERANCE": f"{tolerances['price_bps']:.1f}",
+            "FEE_TOLERANCE": f"{tolerances['fees_usd']:.2f}",
+            "RECONCILIATION_ROWS": reconciliation_rows,
+        },
+    )
     assets = output_dir / "assets"
     raw = output_dir / "raw"
     tutorial_output = output_dir / "tutorial-decay-audit"
+    reconciliation_output = output_dir / "reconciliation-notebook"
     assets.mkdir(parents=True, exist_ok=True)
     raw.mkdir(parents=True, exist_ok=True)
     tutorial_output.mkdir(parents=True, exist_ok=True)
+    reconciliation_output.mkdir(parents=True, exist_ok=True)
     (output_dir / "index.html").write_text(html, encoding="utf-8")
     (tutorial_output / "index.html").write_text(tutorial_html, encoding="utf-8")
+    (reconciliation_output / "index.html").write_text(
+        reconciliation_html, encoding="utf-8"
+    )
     copy2(source_dir / "styles.css", assets / "styles.css")
     copy2(source_dir / "tally.js", assets / "tally.js")
     for name in (
@@ -144,8 +183,15 @@ def build(
         "tutorial-decay-audit.json",
         "decay-run-manifest.schema.json",
         "orb-decay-timeline.json",
+        "reconciliation-expected-sample.csv",
+        "reconciliation-actual-sample.csv",
+        "reconciliation-example.json",
     ):
         copy2(data_path.parent / name, raw / name)
+    copy2(
+        source_dir.parent / "research/reconcile_live_vs_backtest.py",
+        raw / "reconcile_live_vs_backtest.py",
+    )
 
 
 def main() -> int:

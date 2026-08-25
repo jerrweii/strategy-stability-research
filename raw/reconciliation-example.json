@@ -1,0 +1,135 @@
+{
+  "artifact_id": "live-reconciliation-notebook-01",
+  "page_version": "2026-08-25",
+  "title": "Live-vs-backtest reconciliation notebook",
+  "matching_key": "trade_id",
+  "tolerances": {
+    "timing_seconds": 60,
+    "price_bps": 5.0,
+    "fees_usd": 0.01,
+    "quantity_absolute": 1e-09
+  },
+  "inputs": {
+    "expected": {
+      "file": "reconciliation-expected-sample.csv",
+      "sha256": "c00aeb47e65b0f3416bcda7f8514b1497977bbb47c8c6432bd56388a91c3ac5b"
+    },
+    "actual": {
+      "file": "reconciliation-actual-sample.csv",
+      "sha256": "9d752e98448e0be73a6840c05a03a98cde9e0d9db89c57aee6554d06155f17bc"
+    }
+  },
+  "summary": {
+    "total_keys": 7,
+    "matched_pairs": 5,
+    "exact_pairs": 1,
+    "mismatch_keys": 6,
+    "status_counts": {
+      "exact": 1,
+      "timing_drift": 1,
+      "price_drift": 1,
+      "fee_drift": 1,
+      "multi_factor_drift": 1,
+      "missing_live": 1,
+      "unexpected_live": 1
+    }
+  },
+  "rows": [
+    {
+      "trade_id": "T-001",
+      "status": "exact",
+      "discrepancy_flags": [],
+      "identity_differences": {},
+      "max_timing_delta_seconds": 0.0,
+      "max_price_delta_bps": 0.0,
+      "fee_delta_usd": 0.0,
+      "quantity_delta": 0.0,
+      "expected_pnl_usd": 9.5,
+      "actual_pnl_usd": 9.5,
+      "pnl_gap_usd": 0.0
+    },
+    {
+      "trade_id": "T-002",
+      "status": "timing_drift",
+      "discrepancy_flags": [
+        "timing"
+      ],
+      "identity_differences": {},
+      "max_timing_delta_seconds": 120.0,
+      "max_price_delta_bps": 0.0,
+      "fee_delta_usd": 0.0,
+      "quantity_delta": 0.0,
+      "expected_pnl_usd": -5.5,
+      "actual_pnl_usd": -5.5,
+      "pnl_gap_usd": 0.0
+    },
+    {
+      "trade_id": "T-003",
+      "status": "price_drift",
+      "discrepancy_flags": [
+        "price"
+      ],
+      "identity_differences": {},
+      "max_timing_delta_seconds": 0.0,
+      "max_price_delta_bps": 10.571,
+      "fee_delta_usd": 0.0,
+      "quantity_delta": 0.0,
+      "expected_pnl_usd": 9.5,
+      "actual_pnl_usd": 4.5,
+      "pnl_gap_usd": -5.0
+    },
+    {
+      "trade_id": "T-004",
+      "status": "fee_drift",
+      "discrepancy_flags": [
+        "fee"
+      ],
+      "identity_differences": {},
+      "max_timing_delta_seconds": 0.0,
+      "max_price_delta_bps": 0.0,
+      "fee_delta_usd": 0.25,
+      "quantity_delta": 0.0,
+      "expected_pnl_usd": 9.5,
+      "actual_pnl_usd": 9.25,
+      "pnl_gap_usd": -0.25
+    },
+    {
+      "trade_id": "T-005",
+      "status": "multi_factor_drift",
+      "discrepancy_flags": [
+        "timing",
+        "price",
+        "fee"
+      ],
+      "identity_differences": {},
+      "max_timing_delta_seconds": 180.0,
+      "max_price_delta_bps": 10.482,
+      "fee_delta_usd": 0.3,
+      "quantity_delta": 0.0,
+      "expected_pnl_usd": -5.5,
+      "actual_pnl_usd": -10.8,
+      "pnl_gap_usd": -5.3
+    },
+    {
+      "trade_id": "T-006",
+      "status": "missing_live",
+      "discrepancy_flags": [
+        "missing_live"
+      ],
+      "expected_pnl_usd": 9.5,
+      "actual_pnl_usd": null,
+      "pnl_gap_usd": null
+    },
+    {
+      "trade_id": "T-007",
+      "status": "unexpected_live",
+      "discrepancy_flags": [
+        "unexpected_live"
+      ],
+      "expected_pnl_usd": null,
+      "actual_pnl_usd": 9.5,
+      "pnl_gap_usd": null
+    }
+  ],
+  "interpretation": "Synthetic data demonstrates the contract; it is not a live-performance claim."
+}

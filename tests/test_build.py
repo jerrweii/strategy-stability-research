@@ -76,6 +76,28 @@ class BuildTest(unittest.TestCase):
             html,
         )
 
+    def test_reconciliation_notebook_exposes_mismatches_and_contract(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            build(
+                ROOT / "raw/report-data.json",
+                ROOT / "src",
+                output,
+                "testForm123",
+            )
+            page = output / "reconciliation-notebook/index.html"
+            self.assertTrue(page.exists())
+            html = page.read_text(encoding="utf-8")
+        self.assertIn("6 of 7 sample keys need investigation", html)
+        self.assertIn("multi-factor drift", html)
+        self.assertIn("T-006", html)
+        self.assertIn("missing live", html)
+        self.assertIn(
+            "artifact_id=live-reconciliation-notebook-01",
+            html,
+        )
+
+
     def test_empty_form_id_fails_closed(self):
         with self.assertRaisesRegex(ValueError, "Tally form ID is required"):
             render(self.data, "", ROOT / "src")
@@ -94,12 +116,17 @@ class BuildTest(unittest.TestCase):
                 "assets/styles.css",
                 "assets/tally.js",
                 "tutorial-decay-audit/index.html",
+                "reconciliation-notebook/index.html",
                 "raw/report-data.json",
                 "raw/verification.json",
                 "raw/economics.json",
                 "raw/tutorial-decay-audit.json",
                 "raw/decay-run-manifest.schema.json",
                 "raw/orb-decay-timeline.json",
+                "raw/reconciliation-expected-sample.csv",
+                "raw/reconciliation-actual-sample.csv",
+                "raw/reconciliation-example.json",
+                "raw/reconcile_live_vs_backtest.py",
             }
             actual = {
                 str(path.relative_to(output)).replace("\\", "/")
