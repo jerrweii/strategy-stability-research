@@ -59,7 +59,7 @@
   --expected expected.csv \
   --actual actual.csv \
   --output reconciliation.json</code></pre>
-      <ul><li>Matching is exact on <code>trade_id</code>; the notebook refuses duplicate keys instead of guessing.</li><li>The committed sample is synthetic and covers one example of every displayed mismatch class.</li><li>Input SHA-256 digests are recorded in the JSON output.</li><li>Broker-specific partial fills must be consolidated to the declared trade contract before comparison.</li></ul>
+      <ul><li>Matching is exact on <code>trade_id</code>; the notebook refuses duplicate keys instead of guessing.</li><li>The committed sample is synthetic and covers representative mismatch classes.</li><li>Input SHA-256 digests are recorded in the JSON output.</li><li>Broker-specific partial fills must be consolidated to the declared trade contract before comparison.</li></ul>
       <p><a href="../raw/reconcile_live_vs_backtest.py">Notebook source</a> · <a href="../raw/reconciliation-example.json">Example JSON</a></p>
     </section>
 

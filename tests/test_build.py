@@ -96,6 +96,8 @@ class BuildTest(unittest.TestCase):
             "artifact_id=live-reconciliation-notebook-01",
             html,
         )
+        self.assertIn("representative mismatch classes", html)
+        self.assertNotIn("every displayed mismatch class", html)
 
 
     def test_empty_form_id_fails_closed(self):
